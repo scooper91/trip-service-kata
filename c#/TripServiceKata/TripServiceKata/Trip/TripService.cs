@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using TripServiceKata.Exception;
 
 namespace TripServiceKata.Trip
@@ -21,7 +20,7 @@ namespace TripServiceKata.Trip
             var loggedUser = _users.GetLoggedUser();
 		    if (loggedUser != null)
             {
-	            if (UserIsFriendOfLoggedUser(user, loggedUser))
+	            if (user.IsFriendOf(loggedUser))
                 {	                
 	                tripList = _tripDao.FindTripsByUser(user);
                 }
@@ -29,10 +28,5 @@ namespace TripServiceKata.Trip
             }
 		    throw new UserNotLoggedInException();
         }
-
-	    private static bool UserIsFriendOfLoggedUser(User.User user, User.User loggedUser)
-	    {
-		    return Enumerable.Contains(user.GetFriends(), loggedUser);
-	    }
     }
 }
