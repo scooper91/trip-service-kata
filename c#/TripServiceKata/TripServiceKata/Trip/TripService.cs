@@ -1,15 +1,21 @@
 ﻿using System.Collections.Generic;
 using TripServiceKata.Exception;
-using TripServiceKata.User;
 
 namespace TripServiceKata.Trip
 {
     public class TripService
     {
-        public List<Trip> GetTripsByUser(User.User user)
+	    private readonly IUsers _users;
+
+	    public TripService(IUsers users)
+	    {
+		    _users = users;
+	    }
+
+	    public List<Trip> GetTripsByUser(User.User user)
         {
             List<Trip> tripList = new List<Trip>();
-            User.User loggedUser = UserSession.GetInstance().GetLoggedUser();
+            var loggedUser = _users.GetLoggedUser();
             bool isFriend = false;
             if (loggedUser != null)
             {
