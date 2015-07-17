@@ -6,10 +6,12 @@ namespace TripServiceKata.Trip
     public class TripService
     {
 	    private readonly IUsers _users;
+	    private readonly ITripDao _tripDao;
 
-	    public TripService(IUsers users)
+	    public TripService(IUsers users, ITripDao tripDao)
 	    {
 		    _users = users;
+			_tripDao = tripDao;
 	    }
 
 	    public List<Trip> GetTripsByUser(User.User user)
@@ -28,10 +30,10 @@ namespace TripServiceKata.Trip
                     }
                 }
                 if (isFriend)
-                {
-                    tripList = TripDAO.FindTripsByUser(user);
+                {	                
+	                tripList = _tripDao.FindTripsByUser(user);
                 }
-                return tripList;
+	            return tripList;
             }
             else
             {
