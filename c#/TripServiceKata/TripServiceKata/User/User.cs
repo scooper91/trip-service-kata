@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TripServiceKata.Trip;
 
 namespace TripServiceKata.User
 {
@@ -31,6 +32,16 @@ namespace TripServiceKata.User
 	    public bool IsFriendOf(User loggedUser)
 	    {
 		    return Enumerable.Contains(GetFriends(), loggedUser);
+	    }
+
+	    public List<Trip.Trip> GetFriendsTrips(User user, ITripDao tripDao)
+	    {
+		    var tripList = new List<Trip.Trip>();
+		    if (IsFriendOf(user))
+		    {
+			    tripList = tripDao.FindTripsByUser(this);
+		    }
+		    return tripList;
 	    }
     }
 }
